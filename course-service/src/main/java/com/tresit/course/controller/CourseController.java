@@ -9,14 +9,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tresit.course.model.Course;
 import com.tresit.course.service.CourseService;
 
 @RestController
-@RequestMapping("/cursos")
+@RequestMapping
 public class CourseController {
 
     private final CourseService service;
@@ -26,7 +28,11 @@ public class CourseController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Course>> getAllCourses() {
+    public ResponseEntity<List<Course>> getAllCourses(@RequestParam(name = "name", required = false) String name, 
+        @RequestHeader(name = "token-request", required = false) String token) {
+            System.out.println("Nombre: " + name);
+            System.out.println("Token: " + token);
+
         return ResponseEntity.ok(service.getAllCourses());
     }
     

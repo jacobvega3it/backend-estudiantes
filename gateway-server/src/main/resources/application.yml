@@ -1,0 +1,53 @@
+server:
+  port: 8095
+spring:
+  application:
+    name: gateway-server
+  cloud:
+    gateway:
+      routes:
+      - id: student-service-alumnos
+        uri: lb://student-service
+        predicates:
+        - Path=/api/estudiantes/**
+        filters:
+        - StripPrefix=1
+        #- name: SampleCookie
+        #- name: EjemploCookie
+        #  args:
+        #    message: Mensaje personalizado para servicio de estudiantes
+        #    name: user
+        #    value: admin3it
+        - EjemploCookie=mi mensaje personalizado para servicio de estudiantes version 2, usuario, user3it
+      - id: student-service-carreras
+        uri: lb://student-service
+        predicates:
+        - Path=/api/carreras/**
+        filters:
+        - StripPrefix=1
+      - id: course-service
+        uri: lb://course-service
+        predicates:
+        - Path=/api/cursos/**
+        - Header=token, \d+
+        #- Header=token, 12345
+        - Method=GET, POST
+        - Query=color, verde
+        #En Postman se debe agregar la variable de esta forma: paso=permitido; Path=/api/cursos;
+        - Cookie=paso, permitido
+        filters:
+        - StripPrefix=2
+        - AddRequestHeader=token-request, Entrada
+        - AddResponseHeader=token-response, Salida
+        - AddRequestParameter=name, 3it
+        - SetResponseHeader=Content-Type, text/plain
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.web: DEBUG

@@ -25,4 +25,4 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
 student-service:
-  url: http://student-service/carreras
+  url: http://gateway-server/api/carreras

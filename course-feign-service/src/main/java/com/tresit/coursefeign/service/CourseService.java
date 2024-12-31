@@ -1,10 +1,10 @@
-package com.tresit.course.service;
+package com.tresit.coursefeign.service;
 
 import java.util.List;
 import java.util.Map;
 
-import com.tresit.course.dto.CourseDto;
-import com.tresit.course.model.Course;
+import com.tresit.coursefeign.dto.CourseDto;
+import com.tresit.coursefeign.model.Course;
 
 public interface CourseService {
 

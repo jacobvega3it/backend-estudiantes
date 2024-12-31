@@ -18,7 +18,7 @@ spring:
         #    message: Mensaje personalizado para servicio de estudiantes
         #    name: user
         #    value: admin3it
-        - EjemploCookie=mi mensaje personalizado para servicio de estudiantes version 2, usuario, user3it
+        #- EjemploCookie=mi mensaje personalizado para servicio de estudiantes version 2, usuario, user3it
       - id: student-service-carreras
         uri: lb://student-service
         predicates:
@@ -29,18 +29,24 @@ spring:
         uri: lb://course-service
         predicates:
         - Path=/api/cursos/**
-        - Header=token, \d+
+        #- Header=token, \d+
         #- Header=token, 12345
-        - Method=GET, POST
-        - Query=color, verde
+        #- Method=GET, POST
+        #- Query=color, verde
         #En Postman se debe agregar la variable de esta forma: paso=permitido; Path=/api/cursos;
-        - Cookie=paso, permitido
+        #- Cookie=paso, permitido
         filters:
         - StripPrefix=2
-        - AddRequestHeader=token-request, Entrada
-        - AddResponseHeader=token-response, Salida
-        - AddRequestParameter=name, 3it
-        - SetResponseHeader=Content-Type, text/plain
+        #- AddRequestHeader=token-request, Entrada
+        #- AddResponseHeader=token-response, Salida
+        #- AddRequestParameter=name, 3it
+        #- SetResponseHeader=Content-Type, text/plain
+      - id: course-feign-service
+        uri: lb://course-feign-service
+        predicates:
+        - Path=/api/cursosfeign/**
+        filters:
+        - StripPrefix=2
 eureka:
   client:
     service-url:

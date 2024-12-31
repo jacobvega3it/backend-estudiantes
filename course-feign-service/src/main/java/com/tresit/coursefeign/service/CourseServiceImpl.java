@@ -1,41 +1,46 @@
-package com.tresit.course.service;
+package com.tresit.coursefeign.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Value;
+//import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.RestTemplate;
+//import org.springframework.web.client.RestTemplate;
 
-import com.tresit.course.dto.CareerDto;
-import com.tresit.course.dto.CourseDto;
-import com.tresit.course.model.Course;
-import com.tresit.course.repository.CourseRepository;
+import com.tresit.coursefeign.client.StudentServiceClient;
+import com.tresit.coursefeign.dto.CareerDto;
+import com.tresit.coursefeign.dto.CourseDto;
+import com.tresit.coursefeign.model.Course;
+import com.tresit.coursefeign.repository.CourseRepository;
 
 @Service
 public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
-    private final RestTemplate restTemplate;
+    //private final RestTemplate restTemplate;
+    private final StudentServiceClient carrerasFeignClient;
 
-    public CourseServiceImpl(CourseRepository courseRepository, RestTemplate restTemplate) {
+    public CourseServiceImpl(CourseRepository courseRepository, StudentServiceClient studentServiceClient) {
         this.courseRepository = courseRepository;
-        this.restTemplate = restTemplate;
+        this.carrerasFeignClient = studentServiceClient;
     }
 
-    @Value("${student-service.url}")
-    private String studentServiceUrl;
+    //@Value("${student-service.url}")
+    //private String studentServiceUrl;
 
 
     @Override
     @Transactional(readOnly = true)
     public List<CourseDto> getAllCoursesWithData() {
-        String url = studentServiceUrl;
+        //String url = studentServiceUrl;
         List<CourseDto> result = new ArrayList<>();
-        CareerDto[] careers = restTemplate.getForObject(url, CareerDto[].class);
+
+        //CareerDto[] careers = restTemplate.getForObject(url, CareerDto[].class);
+        CareerDto[] careers = carrerasFeignClient.findAll();
+
         List<Course> courses = courseRepository.findAll();
 
         for (Course course : courses) {
@@ -61,8 +66,9 @@ public class CourseServiceImpl implements CourseService {
     @Override
     @Transactional(readOnly = true)
     public List<Map<String, Object>> getCoursesWithCareers() {
-        String url = studentServiceUrl;
-        CareerDto[] careers = restTemplate.getForObject(url, CareerDto[].class);
+        //String url = studentServiceUrl;
+        //CareerDto[] careers = restTemplate.getForObject(url, CareerDto[].class);
+        CareerDto[] careers = carrerasFeignClient.findAll();
 
         List<Map<String, Object>> result = new ArrayList<>();
 

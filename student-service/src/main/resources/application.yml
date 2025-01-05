@@ -18,6 +18,42 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
     defer-datasource-initialization: true
+resilience4j:
+  circuitbreaker:
+    instances:
+      studentService:
+        #Define el tamaño de la ventana deslizante que el Circuit Breaker utiliza para evaluar las llamadas. 
+        #Aquí se analizarán las últimas 10 llamadas (exitosas y fallidas) para calcular el porcentaje de fallos.
+        slidingWindowSize: 10
+        #Configura la cantidad mínima de llamadas que se requieren (por período de ventana deslizante) antes de 
+        #que CircuitBreaker pueda calcular la tasa de error o la tasa de llamadas lentas.
+        minimumNumberOfCalls: 5
+        #Indica cuántas llamadas se permiten mientras el Circuit Breaker está en estado Half-Open. 
+        #Esto se usa para probar si el servicio está funcionando correctamente antes de cerrar el Circuit Breaker.
+        permittedNumberOfCallsInHalfOpenState: 3
+        #Define cuánto tiempo el Circuit Breaker permanecerá en estado Open antes de pasar a Half-Open. Durante este tiempo, 
+        #todas las llamadas al servicio fallarán inmediatamente.
+        waitDurationInOpenState: 20s
+        #Es el umbral de porcentaje de fallos (en este caso, 50%) que, si se alcanza o supera en la ventana deslizante, 
+        #activará el Circuit Breaker y lo pondrá en estado Open.
+        failureRateThreshold: 50
+        #Configura el umbral de duración por encima del cual las llamadas se consideran lentas y aumenta la tasa de llamadas lentas.
+        slowCallDurationThreshold: 4s
+        #Define el umbral de porcentaje de llamadas lentas (en este caso, 50%) que, si se alcanza o supera en la ventana 
+        #deslizante, volverá a abrir el Circuit Breaker.
+        slowCallRateThreshold: 50
+  timelimiter:
+    instances:
+      studentService:
+        timeoutDuration: 1s
+management: 
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
 eureka:
   client:
     service-url:

@@ -49,7 +49,7 @@ public class CourseController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Course> getCourseById(@PathVariable Long id) {
-        return ResponseEntity.ok(service.getCourseById(id));
+        return ResponseEntity.ok(service.getCourseById(id)); 
     }
 
     @PostMapping

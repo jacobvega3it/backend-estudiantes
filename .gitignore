@@ -1,1 +1,10 @@
 .DS_Store
+
+#Archivos de entorno
+.env
+.env.local
+
+#Otros archivos comunes 
+target/
+.idea/
+*.iml

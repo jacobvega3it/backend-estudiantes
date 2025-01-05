@@ -3,6 +3,7 @@ package com.tresit.course.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tresit.course.dto.CourseDto;
+import com.tresit.commons.dto.CourseDto;
 import com.tresit.course.model.Course;
 import com.tresit.course.service.CourseService;
 
+@RefreshScope
 @RestController
 @RequestMapping
 public class CourseController {

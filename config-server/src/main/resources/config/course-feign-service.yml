@@ -1,0 +1,10 @@
+# Configuración específica del servicio de cursos
+server:
+  port: 8082  # Puerto específico para este servicio
+
+spring:
+  application:
+    name: course-feign-service
+
+student-service:
+  url: http://localhost:8095/api/carreras

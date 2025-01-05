@@ -1,6 +1,8 @@
-package com.tresit.coursefeign.dto;
+package com.tresit.commons.dto;
 
 import java.util.List;
+
+import com.tresit.commons.dto.course.StudentDto;
 
 public class CareerDto {
 
@@ -26,7 +28,5 @@ public class CareerDto {
     public void setStudentList(List<StudentDto> studentList) {
         this.studentList = studentList;
     }
-
-    
 
 }

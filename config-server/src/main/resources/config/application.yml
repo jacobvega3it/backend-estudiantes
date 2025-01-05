@@ -1,0 +1,26 @@
+# Esta configuración será heredada por todos los servicios
+spring:
+  datasource:
+    # Uso de variables de entorno
+    url: jdbc:mysql://localhost:3306/institucion
+    username: root
+    password: admin123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  sql:
+    init:
+      mode: always  # Ejecuta scripts SQL al iniciar
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+    defer-datasource-initialization: true
+
+# Configuración de Eureka común 
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true

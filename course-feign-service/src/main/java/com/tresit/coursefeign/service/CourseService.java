@@ -3,7 +3,7 @@ package com.tresit.coursefeign.service;
 import java.util.List;
 import java.util.Map;
 
-import com.tresit.coursefeign.dto.CourseDto;
+import com.tresit.commons.dto.CourseDto;
 import com.tresit.coursefeign.model.Course;
 
 public interface CourseService {

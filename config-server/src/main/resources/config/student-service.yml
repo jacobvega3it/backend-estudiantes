@@ -1,0 +1,7 @@
+# Configuración específica del servicio de estudiantes
+server:
+  port: 8099  # Puerto específico para este servicio
+
+spring:
+  application:
+    name: student-service

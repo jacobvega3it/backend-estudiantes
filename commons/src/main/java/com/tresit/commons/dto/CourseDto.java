@@ -1,4 +1,4 @@
-package com.tresit.coursefeign.dto;
+package com.tresit.commons.dto;
 
 public class CourseDto {
 
@@ -32,5 +32,4 @@ public class CourseDto {
         this.career = career;
     }
 
-    
 }

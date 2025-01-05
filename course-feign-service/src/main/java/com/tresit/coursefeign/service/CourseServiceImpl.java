@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 //import org.springframework.web.client.RestTemplate;
 
+import com.tresit.commons.dto.CareerDto;
+import com.tresit.commons.dto.CourseDto;
 import com.tresit.coursefeign.client.StudentServiceClient;
-import com.tresit.coursefeign.dto.CareerDto;
-import com.tresit.coursefeign.dto.CourseDto;
 import com.tresit.coursefeign.model.Course;
 import com.tresit.coursefeign.repository.CourseRepository;
 

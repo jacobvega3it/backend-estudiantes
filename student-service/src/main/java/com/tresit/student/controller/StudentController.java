@@ -8,6 +8,7 @@ import java.util.concurrent.CompletableFuture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tresit.student.dto.StudentDto;
+import com.tresit.commons.dto.student.StudentDto;
 import com.tresit.student.model.Student;
 import com.tresit.student.service.StudentService;
 import com.tresit.student.service.StudentServiceImpl;
@@ -26,7 +27,7 @@ import com.tresit.student.service.StudentServiceImpl;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
+@RefreshScope
 @RestController
 @RequestMapping("/estudiantes")
 public class StudentController {

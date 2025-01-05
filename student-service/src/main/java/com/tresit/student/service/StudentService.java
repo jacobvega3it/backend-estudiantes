@@ -2,7 +2,7 @@ package com.tresit.student.service;
 
 import java.util.List;
 
-import com.tresit.student.dto.StudentDto;
+import com.tresit.commons.dto.student.StudentDto;
 import com.tresit.student.model.Student;
 
 public interface StudentService {

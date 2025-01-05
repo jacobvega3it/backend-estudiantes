@@ -14,7 +14,7 @@ import com.tresit.student.model.Career;
 import com.tresit.student.model.Student;
 import com.tresit.student.repository.StudentRepository;
 
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+//import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -37,13 +37,13 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     @Transactional(readOnly = true)
-    @CircuitBreaker(name = "studentService", fallbackMethod = "getAllStudentsFallback")
+    //@CircuitBreaker(name = "studentService", fallbackMethod = "getAllStudentsFallback")
     public List<Student> getAllStudents() {
-        logger.info("Intento de obtener estudiantes - " + LocalDateTime.now());
+        /*logger.info("Intento de obtener estudiantes - " + LocalDateTime.now());
         if (Math.random() < 0.7) {
             logger.error("Error simulado al obtener estudiantes - ");
             throw new RuntimeException("Error simulado en el servicio");
-        }
+        }*/
         return studentRepository.findAll();
     }
 

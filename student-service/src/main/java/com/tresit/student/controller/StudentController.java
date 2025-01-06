@@ -50,11 +50,17 @@ public class StudentController {
     //@CircuitBreaker(name = "studentService", fallbackMethod = "getOneStudentFallback")
     //@TimeLimiter(name = "studentService")
     @GetMapping("/{id}")
-    public CompletableFuture<?> getStudentById(@PathVariable Long id) throws InterruptedException {
+    public ResponseEntity<Student> getStudentById(@PathVariable Long id) {
 
-        return CompletableFuture.supplyAsync(() -> {
+        Student student = service.getStudentById(id);
+        if (student == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(student);
 
-            /*if (id.equals(3L)){
+        /*return CompletableFuture.supplyAsync(() -> {
+
+            if (id.equals(3L)){
                 throw new IllegalStateException("Error simulado en el controlador");
             }
             if (id.equals(7L)){
@@ -63,15 +69,10 @@ public class StudentController {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            }*/
-    
-            Student student = service.getStudentById(id);
-            if (student == null) {
-                return ResponseEntity.notFound().build();
             }
-            return ResponseEntity.ok(student);
     
-        });
+    
+        });*/
 
     }
 

@@ -3,14 +3,19 @@ server:
 spring:
   application:
     name: gateway-server
+  config:
+    import: optional:file:../.env[.properties]
   cloud:
     gateway:
+      default-filters:
+        - AddRequestHeader=Filtro-Global, "Este-es-un-filtro-global"    
       routes:
       - id: student-service-alumnos
         uri: lb://student-service
         predicates:
         - Path=/api/estudiantes/**
         filters:
+        - AuthenticationFilter
         - StripPrefix=1
         #- name: SampleCookie
         #- name: EjemploCookie
@@ -24,6 +29,7 @@ spring:
         predicates:
         - Path=/api/carreras/**
         filters:
+        - AuthenticationFilter
         - StripPrefix=1
       - id: course-service
         uri: lb://course-service
@@ -36,6 +42,7 @@ spring:
         #En Postman se debe agregar la variable de esta forma: paso=permitido; Path=/api/cursos;
         #- Cookie=paso, permitido
         filters:
+        - AuthenticationFilter
         - StripPrefix=2
         #- AddRequestHeader=token-request, Entrada
         #- AddResponseHeader=token-response, Salida
@@ -46,6 +53,7 @@ spring:
         predicates:
         - Path=/api/cursosfeign/**
         filters:
+        - AuthenticationFilter
         - StripPrefix=2
 eureka:
   client:
@@ -57,3 +65,9 @@ logging:
   level:
     org.springframework.cloud.gateway: DEBUG
     org.springframework.web: DEBUG
+jwt:
+  secret: dHVfY2xhdmVfc2VjcmV0YV9zdXBlcl9zZWd1cmFfbWluaW1vXzMyX2NhcmFjdGVyZXM=
+  expiration: 86400000
+  default-credentials:
+    username: admin
+    password: password123

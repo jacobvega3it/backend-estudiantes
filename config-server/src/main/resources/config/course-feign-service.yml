@@ -7,4 +7,5 @@ spring:
     name: course-feign-service
 
 student-service:
-  url: http://localhost:8095/api/carreras
+  #url: http://localhost:8095/api/carreras
+  url: http://student-service/carreras

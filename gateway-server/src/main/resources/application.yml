@@ -55,6 +55,20 @@ spring:
         filters:
         - AuthenticationFilter
         - StripPrefix=2
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+            allowedHeaders:
+              - Authorization
+              - Content-Type
+              - Cache-Control
+            allowCredentials: false
 eureka:
   client:
     service-url:

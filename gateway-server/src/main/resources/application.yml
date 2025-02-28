@@ -1,5 +1,6 @@
 server:
   port: 8095
+
 spring:
   application:
     name: gateway-server
@@ -72,9 +73,12 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://eureka-service:8761/eureka/
     register-with-eureka: true
     fetch-registry: true
+  instance:
+    instance-id: ${spring.application.name}:${server.port}
+    hostname: ${spring.application.name} 
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG

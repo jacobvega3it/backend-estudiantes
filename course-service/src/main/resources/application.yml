@@ -4,8 +4,8 @@ spring:
   application:
     name: course-service
   datasource:
-    url: jdbc:mysql://localhost:3306/institucion
-    username: root
+    url: jdbc:mysql://db-service:3306/db-3it
+    username: mysql-db-3it
     password: admin123
     driver-class-name: com.mysql.cj.jdbc.Driver
   sql:
@@ -18,11 +18,16 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
     defer-datasource-initialization: true
+
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://eureka-service:8761/eureka/
     register-with-eureka: true
     fetch-registry: true
+  instance:
+      instance-id: ${spring.application.name}:${server.port}
+      hostname: ${spring.application.name}    
+
 student-service:
   url: http://gateway-server/api/carreras

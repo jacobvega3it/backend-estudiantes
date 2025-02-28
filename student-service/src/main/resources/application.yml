@@ -1,66 +1,25 @@
-#server:
-#  port: 8099
+# student-service/src/main/resources/application.yml
 spring:
   application:
     name: student-service
   config:
-    import: "optional:configserver:http://localhost:8888"
+    import: "optional:configserver:http://config-service:8888"
   cloud:
     config:
       enabled: true
-management: 
+
+management:
   endpoints:
     web:
       exposure:
         include: "refresh,health"
-  endpoint:
-    health:
-      show-details: always
 
-  # datasource:
-  #   url: jdbc:mysql://localhost:3306/institucion
-  #   username: root
-  #   password: admin123
-  #   driver-class-name: com.mysql.cj.jdbc.Driver
-  # sql:
-  #   init:
-  #     mode: always
-  # jpa:
-  #   hibernate:
-  #     ddl-auto: create
-  #   properties:
-  #     hibernate:
-  #       dialect: org.hibernate.dialect.MySQLDialect
-  #   defer-datasource-initialization: true
-resilience4j:
-  circuitbreaker:
-    instances:
-      studentService:
-        #Define el tamaño de la ventana deslizante que el Circuit Breaker utiliza para evaluar las llamadas. 
-        #Aquí se analizarán las últimas 10 llamadas (exitosas y fallidas) para calcular el porcentaje de fallos.
-        slidingWindowSize: 10
-        #Configura la cantidad mínima de llamadas que se requieren (por período de ventana deslizante) antes de 
-        #que CircuitBreaker pueda calcular la tasa de error o la tasa de llamadas lentas.
-        minimumNumberOfCalls: 5
-        #Indica cuántas llamadas se permiten mientras el Circuit Breaker está en estado Half-Open. 
-        #Esto se usa para probar si el servicio está funcionando correctamente antes de cerrar el Circuit Breaker.
-        permittedNumberOfCallsInHalfOpenState: 3
-        #Define cuánto tiempo el Circuit Breaker permanecerá en estado Open antes de pasar a Half-Open. Durante este tiempo, 
-        #todas las llamadas al servicio fallarán inmediatamente.
-        waitDurationInOpenState: 20s
-        #Es el umbral de porcentaje de fallos (en este caso, 50%) que, si se alcanza o supera en la ventana deslizante, 
-        #activará el Circuit Breaker y lo pondrá en estado Open.
-        failureRateThreshold: 50
-        #Configura el umbral de duración por encima del cual las llamadas se consideran lentas y aumenta la tasa de llamadas lentas.
-        slowCallDurationThreshold: 4s
-        #Define el umbral de porcentaje de llamadas lentas (en este caso, 50%) que, si se alcanza o supera en la ventana 
-        #deslizante, volverá a abrir el Circuit Breaker.
-        slowCallRateThreshold: 50
-  timelimiter:
-    instances:
-      studentService:
-        timeoutDuration: 1s
-# eureka:
-#   client:
-#     service-url:
-#       defaultZone: http://localhost:8761/eureka/
+eureka:
+    client:
+        service-url:
+            defaultZone: http://eureka-service:8761/eureka/
+        register-with-eureka: true
+        fetch-registry: true
+    instance:
+        instance-id: ${spring.application.name}:${server.port}
+        hostname: ${spring.application.name}

@@ -2,25 +2,34 @@
 spring:
   datasource:
     # Uso de variables de entorno
-    url: jdbc:mysql://localhost:3306/institucion
-    username: root
-    password: admin123
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
   sql:
     init:
       mode: always  # Ejecuta scripts SQL al iniciar
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: create # Valor por defecto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
     defer-datasource-initialization: true
 
-# Configuración de Eureka común 
+# Configuración de Eureka común
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: ${EUREKA_CLIENT_SERVICE_URL}
     register-with-eureka: true
-    fetch-registry: true
+    instance:
+      instance-id: ${spring.application.name}:${server.port}
+      hostname: ${spring.application.name}
+
+jwt:
+  secret: dHVfY2xhdmVfc2VjcmV0YV9zdXBlcl9zZWd1cmFfbWluaW1vXzMyX2NhcmFjdGVyZXM=
+  expiration: 86400000
+  default-credentials:
+    username: admin
+    password: password123

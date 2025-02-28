@@ -1,0 +1,26 @@
+services:
+  course-service: # Define el servicio "student-service"
+    #image: tresit-course # Imagen Docker que se utilizará para este contenedor
+    image: jacobvega3it/tresit-course:v1 # Imagen Docker que se utilizará para este contenedor
+    container_name: course-service # Nombre asignado al contenedor que se ejecutará
+    environment: # Variables de entorno necesarias para configurar el contenedor
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL} # URL de la base de datos, se espera como variable de entorno en el sistema
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME} # Nombre de usuario para la base de datos
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD} # Contraseña para la base de datos
+      EUREKA_CLIENT_SERVICE_URL: ${EUREKA_CLIENT_SERVICE_URL} # URL de Eureka para el servicio de descubrimiento
+      STUDENT_SERVICE_URL: ${STUDENT_SERVICE_URL} #URL del Gateway del Service Student
+      SPRING_CLOUD_CONFIG_URI: ${SPRING_CLOUD_CONFIG_URI}  # URL del servidor de configuración
+      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: refresh,health
+      PATH: /usr/local/openjdk-17/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin # Rutas de búsqueda para binarios del sistema
+      JAVA_HOME: /usr/local/openjdk-17 # Establece la variable de entorno para la instalación de Java
+      LANG: C.UTF-8 # Configuración regional del contenedor para garantizar la compatibilidad de caracteres
+      JAVA_VERSION: 17 # Especifica la versión de Java que se está utilizando
+    networks:
+      - students_network
+    ports:
+      - "${PORT}:8081" # Mapea el puerto del contenedor (8080) al puerto especificado en la variable de entorno 'PORT'
+  
+# Definición de redes
+networks:
+  students_network: # Red interna para comunicación entre contenedores
+    external: true  # Indica que la red ya está creada fuera de este archivo

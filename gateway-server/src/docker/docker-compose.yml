@@ -1,0 +1,36 @@
+services:
+  gateway-server:
+    #image: tresit-gateway
+    image: jacobvega3it/tresit-gateway:v1
+    container_name: gateway-server
+    environment:
+      EUREKA_CLIENT_SERVICE_URL: ${EUREKA_CLIENT_SERVICE_URL}
+      # SPRING_CLOUD_GATEWAY_ROUTES_0_ID: student-service-alumnos
+      # SPRING_CLOUD_GATEWAY_ROUTES_0_URI: ${STUDENT_SERVICE_URL}
+      # SPRING_CLOUD_GATEWAY_ROUTES_0_PREDICATES_0: ${STUDENT_SERVICE_PREDICATE}
+      # SPRING_CLOUD_GATEWAY_ROUTES_0_FILTERS_0: StripPrefix=1
+      # SPRING_CLOUD_GATEWAY_ROUTES_1_ID: student-service-carreras
+      # SPRING_CLOUD_GATEWAY_ROUTES_1_URI: ${STUDENT_SERVICE_CARRERAS_URL}
+      # SPRING_CLOUD_GATEWAY_ROUTES_1_PREDICATES_0: ${STUDENT_SERVICE_CARRERAS_PREDICATE}
+      # SPRING_CLOUD_GATEWAY_ROUTES_1_FILTERS_0: StripPrefix=1
+      # SPRING_CLOUD_GATEWAY_ROUTES_2_ID: course-service
+      # SPRING_CLOUD_GATEWAY_ROUTES_2_URI: ${COURSE_SERVICE_URL}
+      # SPRING_CLOUD_GATEWAY_ROUTES_2_PREDICATES_0: ${COURSE_SERVICE_PREDICATE}
+      # SPRING_CLOUD_GATEWAY_ROUTES_2_FILTERS_0: StripPrefix=2
+      # Variables JWT
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRATION: ${JWT_EXPIRATION}
+      JWT_USERNAME: ${JWT_USERNAME}
+      JWT_PASSWORD: ${JWT_PASSWORD}
+      PATH: /usr/local/openjdk-17/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+      JAVA_HOME: /usr/local/openjdk-17
+      LANG: C.UTF-8
+      JAVA_VERSION: 17
+    networks:
+      - students_network
+    ports:
+      - "${PORT}:8095"
+
+networks:
+  students_network:
+    external: true

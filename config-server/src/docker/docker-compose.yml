@@ -1,0 +1,16 @@
+services: # Define los servicios que se desplegarán en los contenedores.
+  config-service: # Nombre del servicio. 
+    container_name: config-service # Nombre personalizado para el contenedor
+    #image: tresit-config # Imagen de Docker que se utilizará.
+    image: jacobvega3it/tresit-config:v1 # Imagen de Docker que se utilizará.
+    environment:
+      SPRING_PROFILES_ACTIVE: native
+    ports: # Configuración para mapear puertos del contenedor al host.
+      - "${PORT}:8888" # Mapea el puerto 8761 del contenedor al puerto 8761 del host.
+    networks:
+      - students_network # Conectar este servicio a la red backend_network
+
+# Definición de redes
+networks:
+  students_network: # Red interna para comunicación entre contenedores
+    external: true  # Indica que la red ya está creada fuera de este archivo

@@ -1,7 +1,6 @@
 services:
   course-feign-service: # Define el servicio "student-service"
-    #image: tresit-course-feign # Imagen Docker que se utilizará para este contenedor
-    image: jacobvega3it/tresit-course-feign:v1 # Imagen Docker que se utilizará para este contenedor
+    image: tresit-course-feign # Imagen Docker que se utilizará para este contenedor
     container_name: course-feign-service # Nombre asignado al contenedor que se ejecutará
     environment: # Variables de entorno necesarias para configurar el contenedor
       SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL} # URL de la base de datos, se espera como variable de entorno en el sistema

@@ -1,7 +1,6 @@
 services:
   gateway-server:
-    #image: tresit-gateway
-    image: jacobvega3it/tresit-gateway:v1
+    image: tresit-gateway
     container_name: gateway-server
     environment:
       EUREKA_CLIENT_SERVICE_URL: ${EUREKA_CLIENT_SERVICE_URL}

@@ -65,6 +65,7 @@ spring:
               - POST
               - PUT
               - DELETE
+              - OPTIONS
             allowedHeaders:
               - Authorization
               - Content-Type

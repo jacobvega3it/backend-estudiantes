@@ -16,10 +16,10 @@ services:
       JAVA_VERSION: 17  # Especifica la versión de Java que se está utilizando
     ports:
       - "${PORT}:8099"  # Mapea el puerto del contenedor (8080) al puerto especificado en la variable de entorno 'PORT'
-    networks:
-      - students_network
+#    networks:
+#      - students_network
 
 # Definición de redes
-networks:
-  students_network: # Red interna para comunicación entre contenedores
-    external: true  # Indica que la red ya está creada fuera de este archivo
+#networks:
+#  students_network: # Red interna para comunicación entre contenedores
+#    external: true  # Indica que la red ya está creada fuera de este archivo

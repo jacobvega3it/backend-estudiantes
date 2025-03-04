@@ -1,6 +1,7 @@
 services: # Define los servicios que se desplegarán en los contenedores.
   eureka-service: # Nombre del servicio. 
     container_name: eureka-service # Nombre personalizado para el contenedor
+    #image: tresit-eureka # Imagen de Docker que se utilizará.
     image: tresit-eureka # Imagen de Docker que se utilizará.
     ports: # Configuración para mapear puertos del contenedor al host.
       - "${PORT}:8761" # Mapea el puerto 8761 del contenedor al puerto 8761 del host.

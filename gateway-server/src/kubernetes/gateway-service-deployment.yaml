@@ -1,0 +1,85 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.1 (a9d05d509)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: gateway-service
+  name: gateway-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: gateway-service
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.26.1 (a9d05d509)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: gateway-service
+    spec:
+      containers:
+        - env:
+            - name: EUREKA_CLIENT_SERVICE_URL
+              value: http://eureka-service:8761/eureka
+            - name: JAVA_HOME
+              value: /usr/local/openjdk-17
+            - name: JAVA_VERSION
+              value: "17"
+            - name: JWT_EXPIRATION
+              value: "86400000"
+            - name: JWT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: datasource-secret-jwt
+                  key: JWT_PASSWORD
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: datasource-secret-jwt
+                  key: JWT_SECRET
+            - name: JWT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: datasource-secret-jwt
+                  key: JWT_USERNAME
+            - name: LANG
+              value: C.UTF-8
+            - name: PATH
+              value: /usr/local/openjdk-17/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+            # - name: SPRING_CLOUD_GATEWAY_ROUTES_0_FILTERS_0
+            #   value: StripPrefix=1
+            # - name: SPRING_CLOUD_GATEWAY_ROUTES_0_ID
+            #   value: student-service-alumnos
+            # - name: SPRING_CLOUD_GATEWAY_ROUTES_0_PREDICATES_0
+            #   value: Path=/api/estudiantes/**
+            # - name: SPRING_CLOUD_GATEWAY_ROUTES_0_URI
+            #   value: lb://student-service
+            # - name: SPRING_CLOUD_GATEWAY_ROUTES_1_FILTERS_0
+            #   value: StripPrefix=1
+            # - name: SPRING_CLOUD_GATEWAY_ROUTES_1_ID
+            #   value: student-service-carreras
+            # - name: SPRING_CLOUD_GATEWAY_ROUTES_1_PREDICATES_0
+            #   value: Path=/api/carreras/**
+            # - name: SPRING_CLOUD_GATEWAY_ROUTES_1_URI
+            #   value: lb://student-service
+            # - name: SPRING_CLOUD_GATEWAY_ROUTES_2_FILTERS_0
+            #   value: StripPrefix=2
+            # - name: SPRING_CLOUD_GATEWAY_ROUTES_2_ID
+            #   value: course-service
+            # - name: SPRING_CLOUD_GATEWAY_ROUTES_2_PREDICATES_0
+            #   value: Path=/api/cursos/**
+            # - name: SPRING_CLOUD_GATEWAY_ROUTES_2_URI
+            #   value: lb://course-service
+          image: 531811037781.dkr.ecr.us-west-1.amazonaws.com/capacitacion/iplacex:college-gateway
+          name: gateway-service
+          ports:
+            - containerPort: 8095
+          resources: {}
+      restartPolicy: Always
+status: {}

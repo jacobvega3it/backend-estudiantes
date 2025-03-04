@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.1 (a9d05d509)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: student-service
+  name: student-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: student-service
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.26.1 (a9d05d509)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: student-service
+    spec:
+      containers:
+        - env:
+            - name: EUREKA_CLIENT_SERVICE_URL
+              value: http://eureka-service:8761/eureka/
+            - name: JAVA_HOME
+              value: /usr/local/openjdk-17
+            - name: JAVA_VERSION
+              value: "17"
+            - name: LANG
+              value: C.UTF-8
+            - name: MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE
+              value: refresh,health
+            - name: PATH
+              value: /usr/local/openjdk-17/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+            - name: SPRING_CLOUD_CONFIG_URI
+              value: http://config-service:8888
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: datasource-secret
+                  key: SPRING_DATASOURCE_PASSWORD
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://db-students.c52mvcgf8bec.us-west-1.rds.amazonaws.com:3306/tresit
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: datasource-secret
+                  key: SPRING_DATASOURCE_USERNAME
+            - name: SPRING_APPLICATION_NAME
+              value: "student-service" 
+            - name: SERVER_PORT
+              value: "8099"
+            - name: EUREKA_INSTANCE_INSTANCE_ID
+              value: "$(SPRING_APPLICATION_NAME):$(SERVER_PORT)"
+            - name: EUREKA_INSTANCE_HOSTNAME
+              value: "$(SPRING_APPLICATION_NAME)"
+          image: 531811037781.dkr.ecr.us-west-1.amazonaws.com/capacitacion/iplacex:college-student
+          name: student-service
+          ports:
+            - containerPort: 8099
+          resources: {}
+      restartPolicy: Always
+status: {}
